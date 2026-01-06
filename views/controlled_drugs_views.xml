@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Controlled Drugs Register Tree View -->
+        <record id="controlled_drugs_register_tree_view" model="ir.ui.view">
+            <field name="name">controlled.drugs.register.tree</field>
+            <field name="model">controlled.drugs.register</field>
+            <field name="arch" type="xml">
+                <list string="Controlled Drugs Register" create="false" edit="false">
+                    <field name="date"/>
+                    <field name="product_id"/>
+                    <field name="drug_schedule" optional="show"/>
+                    <field name="transaction_type"/>
+                    <field name="quantity_received"/>
+                    <field name="quantity_dispensed"/>
+                    <field name="running_balance"/>
+                    <field name="patient_name" optional="hide"/>
+                    <field name="authorized_by"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Controlled Drugs Register Form View -->
+        <record id="controlled_drugs_register_form_view" model="ir.ui.view">
+            <field name="name">controlled.drugs.register.form</field>
+            <field name="model">controlled.drugs.register</field>
+            <field name="arch" type="xml">
+                <form string="Controlled Drugs Register Entry">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date"/>
+                                <field name="product_id"/>
+                                <field name="product_generic_name"/>
+                                <field name="product_strength"/>
+                                <field name="drug_schedule"/>
+                                <field name="transaction_type"/>
+                            </group>
+                            <group>
+                                <field name="quantity_received" readonly="transaction_type in ['dispensing', 'destruction', 'transfer_out']"/>
+                                <field name="quantity_dispensed" readonly="transaction_type in ['receipt', 'return', 'transfer_in']"/>
+                                <field name="running_balance" readonly="1"/>
+                                <field name="lot_id"/>
+                            </group>
+                        </group>
+                        <group string="Dispensing Details" invisible="'transaction_type', '!=', 'dispensing'">
+                            <group>
+                                <field name="prescription_id"/>
+                                <field name="patient_name" required="1"/>
+                                <field name="patient_id_number"/>
+                            </group>
+                            <group>
+                                <field name="prescriber_name" required="1"/>
+                                <field name="prescriber_license"/>
+                            </group>
+                        </group>
+                        <group string="Purchase/Receipt Details" invisible="'transaction_type', '!=', 'receipt'">
+                            <group>
+                                <field name="supplier_id"/>
+                                <field name="purchase_order_ref"/>
+                            </group>
+                            <group>
+                                <field name="invoice_ref"/>
+                            </group>
+                        </group>
+                        <group string="Authorization">
+                            <group>
+                                <field name="authorized_by"/>
+                                <field name="witnessed_by" required="'transaction_type', '=', 'destruction'"/>
+                            </group>
+                            <group>
+                                <field name="pos_order_id" readonly="1"/>
+                                <field name="stock_picking_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remarks" placeholder="Additional notes or reasons for this transaction..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_controlled_drugs_register" model="ir.actions.act_window">
+            <field name="name">Controlled Drugs Register</field>
+            <field name="res_model">controlled.drugs.register</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_product': 1}</field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_controlled_drugs_register"
+                  name="Controlled Drugs Register"
+                  parent="menu_pharmacy_root"
+                  action="action_controlled_drugs_register"
+                  sequence="30"
+                  groups="pos_demo.group_pharmacist,pos_demo.group_pharmacy_manager"/>
+
+    </data>
+</odoo>

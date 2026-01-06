@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- PPB Monthly Returns Report -->
+        <record id="report_ppb_returns" model="ir.actions.report">
+            <field name="name">PPB Monthly Returns</field>
+            <field name="model">controlled.drugs.register</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_demo.report_ppb_returns_document</field>
+            <field name="report_file">pos_demo.report_ppb_returns_document</field>
+        </record>
+
+        <template id="report_ppb_returns_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>PPB Monthly Returns - Controlled Substances</h2>
+                        <p>Pharmacy and Poisons Board of Kenya - Monthly Report</p>
+                        
+                        <div class="mt32">
+                            <p><strong>Reporting Period:</strong> <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%B %Y')"/></p>
+                        </div>
+
+                        <h3 class="mt32">Summary by Drug</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Drug Name</th>
+                                    <th>Schedule</th>
+                                    <th>Opening Balance</th>
+                                    <th>Received</th>
+                                    <th>Dispensed</th>
+                                    <th>Closing Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Group by product and calculate totals -->
+                                <tr t-foreach="docs" t-as="record">
+                                    <td><span t-field="record.product_id"/></td>
+                                    <td><span t-field="record.drug_schedule"/></td>
+                                    <td colspan="4">Data aggregation needed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="row mt64">
+                            <div class="col-6">
+                                <p>
+                                    __________________________<br/>
+                                    Pharmacist in Charge<br/>
+                                    Name &amp; License Number
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <p>
+                                    Date: _______________
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

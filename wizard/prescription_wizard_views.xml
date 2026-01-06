@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="prescription_dispense_wizard_form" model="ir.ui.view">
+            <field name="name">prescription.dispense.wizard.form</field>
+            <field name="model">prescription.dispense.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Dispense Prescription">
+                    <group>
+                        <field name="prescription_id" readonly="1"/>
+                    </group>
+                    <field name="line_ids">
+                        <tree editable="bottom">
+                            <field name="prescription_line_id" column_invisible="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="quantity_prescribed" readonly="1"/>
+                            <field name="quantity_already_dispensed" readonly="1"/>
+                            <field name="quantity_to_dispense"/>
+                            <field name="lot_id"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button string="Dispense" name="action_dispense" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_prescription_dispense_wizard" model="ir.actions.act_window">
+            <field name="name">Dispense Prescription</field>
+            <field name="res_model">prescription.dispense.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

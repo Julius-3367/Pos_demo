@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Controlled Drugs Register Report -->
+        <record id="report_controlled_drugs" model="ir.actions.report">
+            <field name="name">Controlled Drugs Register</field>
+            <field name="model">controlled.drugs.register</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_demo.report_controlled_drugs_document</field>
+            <field name="report_file">pos_demo.report_controlled_drugs_document</field>
+            <field name="binding_model_id" ref="model_controlled_drugs_register"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_controlled_drugs_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Controlled Drugs Register</h2>
+                        <p>As required by Kenya Pharmacy and Poisons Board (PPB)</p>
+
+                        <table class="table table-sm table-bordered mt32">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Drug Name</th>
+                                    <th>Strength</th>
+                                    <th>Transaction Type</th>
+                                    <th>Received</th>
+                                    <th>Dispensed</th>
+                                    <th>Balance</th>
+                                    <th>Patient/Supplier</th>
+                                    <th>Authorized By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="docs" t-as="record">
+                                    <td><span t-field="record.date"/></td>
+                                    <td><span t-field="record.product_id"/></td>
+                                    <td><span t-field="record.product_strength"/></td>
+                                    <td><span t-field="record.transaction_type"/></td>
+                                    <td><span t-field="record.quantity_received"/></td>
+                                    <td><span t-field="record.quantity_dispensed"/></td>
+                                    <td><span t-field="record.running_balance"/></td>
+                                    <td>
+                                        <span t-if="record.patient_name" t-field="record.patient_name"/>
+                                        <span t-if="record.supplier_id" t-field="record.supplier_id"/>
+                                    </td>
+                                    <td><span t-field="record.authorized_by"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

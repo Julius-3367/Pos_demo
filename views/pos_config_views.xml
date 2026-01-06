@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- POS Config Form View Extension -->
+        <record id="pos_config_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">pos.config.form.pharmacy</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="enforce_prescription_check" invisible="not is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="require_pharmacist_validation" invisible="not is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="enable_expiry_check" invisible="not is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="expiry_warning_days" invisible="not enable_expiry_check"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="block_expired_sales" invisible="not is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="enforce_lot_selection" invisible="not is_pharmacy_pos"/>
+                </field>
+                <field name="name" position="after">
+                    <field name="use_fefo_logic" invisible="not is_pharmacy_pos"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

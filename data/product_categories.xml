@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Pharmaceutical Product Categories -->
+        <record id="product_category_analgesics" model="product.category">
+            <field name="name">Analgesics &amp; Pain Relief</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_antibiotics" model="product.category">
+            <field name="name">Antibiotics</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_antihypertensives" model="product.category">
+            <field name="name">Antihypertensives</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_antidiabetics" model="product.category">
+            <field name="name">Antidiabetics</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_antihistamines" model="product.category">
+            <field name="name">Antihistamines &amp; Allergy</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_vitamins" model="product.category">
+            <field name="name">Vitamins &amp; Supplements</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+        <record id="product_category_otc" model="product.category">
+            <field name="name">OTC Medications</field>
+            <field name="parent_id" ref="product.product_category_all"/>
+        </record>
+
+    </data>
+</odoo>

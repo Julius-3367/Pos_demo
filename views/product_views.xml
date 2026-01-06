@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Product Template Form View Extension -->
+        <record id="product_template_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">product.template.form.pharmacy</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Pharmaceutical Info" name="pharmaceutical" invisible="not is_pharmaceutical">
+                        <group>
+                            <group string="Classification">
+                                <field name="is_pharmaceutical"/>
+                                <field name="drug_generic_name" required="is_pharmaceutical"/>
+                                <field name="drug_strength"/>
+                                <field name="drug_dosage_form"/>
+                                <field name="drug_schedule" widget="badge"/>
+                                <field name="therapeutic_class"/>
+                            </group>
+                            <group string="Regulatory">
+                                <field name="ppb_registration_number"/>
+                                <field name="requires_prescription" widget="boolean_toggle"/>
+                                <field name="is_controlled_substance" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Storage &amp; Handling">
+                                <field name="requires_refrigeration"/>
+                                <field name="storage_conditions"/>
+                            </group>
+                        </group>
+                        <group string="Clinical Information">
+                            <field name="active_ingredients" placeholder="List active ingredients..."/>
+                            <field name="contraindications" placeholder="When should this medication NOT be used..."/>
+                            <field name="drug_interactions" placeholder="Known interactions with other medications..."/>
+                            <field name="side_effects" placeholder="Common side effects..."/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <!-- Product Product Form View Extension -->
+        <record id="product_product_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">product.product.form.pharmacy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <group name="group_general" position="after">
+                    <group string="Manufacturer" invisible="not is_pharmaceutical">
+                        <field name="manufacturer_id"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <!-- Stock Lot Form View Extension -->
+        <record id="stock_lot_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">stock.lot.form.pharmacy</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <group name="main_group" position="after">
+                    <group string="Pharmaceutical Batch Info" name="pharmacy_info">
+                        <group>
+                            <field name="batch_number"/>
+                            <field name="manufacturing_date"/>
+                            <field name="expiry_date"/>
+                            <field name="purchase_price"/>
+                        </group>
+                        <group>
+                            <field name="days_to_expiry" string="Days Until Expiry"/>
+                            <field name="expiry_alert" invisible="1"/>
+                            <field name="is_expired" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <!-- Stock Lot Tree View Extension -->
+        <record id="stock_lot_tree_view_pharmacy" model="ir.ui.view">
+            <field name="name">stock.lot.tree.pharmacy</field>
+            <field name="model">stock.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="expiry_date"/>
+                    <field name="days_to_expiry" decoration-danger="days_to_expiry &lt; 90" decoration-warning="days_to_expiry &lt; 180"/>
+                    <field name="expiry_alert" invisible="1"/>
+                    <field name="is_expired" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Expiring Lots Action -->
+        <record id="action_expiring_lots" model="ir.actions.act_window">
+            <field name="name">Expiring Products</field>
+            <field name="res_model">stock.lot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('expiry_alert', '=', True), ('is_expired', '=', False)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No expiring products found
+                </p>
+                <p>Products expiring within 6 months will appear here</p>
+            </field>
+        </record>
+
+        <!-- Expired Lots Action -->
+        <record id="action_expired_lots" model="ir.actions.act_window">
+            <field name="name">Expired Products</field>
+            <field name="res_model">stock.lot</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_expired', '=', True)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No expired products found
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_expiring_products"
+                  name="Expiring Soon"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  action="action_expiring_lots"
+                  sequence="50"/>
+
+        <menuitem id="menu_expired_products"
+                  name="Expired Products"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  action="action_expired_lots"
+                  sequence="51"/>
+
+    </data>
+</odoo>

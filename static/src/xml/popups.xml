@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <!-- Prescription Selection Popup -->
+    <t t-name="pos_demo.PrescriptionPopup">
+        <div class="popup prescription-popup">
+            <header class="modal-header">
+                <h4 class="modal-title">Select Prescription</h4>
+            </header>
+            <main class="modal-body">
+                <div class="search-box mb-3">
+                    <input type="text" 
+                           class="form-control" 
+                           placeholder="Search prescriptions..."
+                           t-on-input="onSearchInput"/>
+                </div>
+                <div class="prescription-list">
+                    <t t-foreach="state.filteredPrescriptions" t-as="rx" t-key="rx.id">
+                        <div class="prescription-item"
+                             t-att-class="{'selected': state.selectedPrescription?.id === rx.id}"
+                             t-on-click="() => selectPrescription(rx)">
+                            <div class="rx-header">
+                                <strong t-esc="rx.name"/>
+                                <span class="badge" t-esc="rx.state"/>
+                            </div>
+                            <div class="rx-details">
+                                <div>Patient: <t t-esc="rx.patient_id[1]"/></div>
+                                <div>Prescriber: <t t-esc="rx.prescriber_id[1]"/></div>
+                                <div>Date: <t t-esc="rx.date"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </main>
+            <footer class="modal-footer">
+                <button class="btn btn-secondary" t-on-click="cancel">Cancel</button>
+                <button class="btn btn-primary" t-on-click="confirm">Select</button>
+            </footer>
+        </div>
+    </t>
+
+    <!-- Batch Selection Popup -->
+    <t t-name="pos_demo.BatchSelectionPopup">
+        <div class="popup batch-selection-popup">
+            <header class="modal-header">
+                <h4 class="modal-title">Select Batch/Lot</h4>
+            </header>
+            <main class="modal-body">
+                <div class="batch-list">
+                    <t t-foreach="state.batches" t-as="batch" t-key="batch.id">
+                        <div class="batch-item"
+                             t-att-class="{'selected': state.selectedBatch?.id === batch.id, 'expired': batch.is_expired}"
+                             t-on-click="() => selectBatch(batch)">
+                            <div class="batch-header">
+                                <strong>Lot: <t t-esc="batch.name"/></strong>
+                                <t t-if="batch.is_expired">
+                                    <span class="badge bg-danger">EXPIRED</span>
+                                </t>
+                                <t t-elif="batch.expiry_alert">
+                                    <span class="badge bg-warning">Expiring Soon</span>
+                                </t>
+                            </div>
+                            <div class="batch-details">
+                                <div>Expiry: <span t-att-class="getExpiryClass(batch)" t-esc="batch.expiry_date"/></div>
+                                <div>Days to Expiry: <t t-esc="getDaysToExpiry(batch.expiry_date)"/></div>
+                                <t t-if="batch.batch_number">
+                                    <div>Batch #: <t t-esc="batch.batch_number"/></div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </main>
+            <footer class="modal-footer">
+                <button class="btn btn-secondary" t-on-click="cancel">Cancel</button>
+                <button class="btn btn-primary" t-on-click="confirm">Select</button>
+            </footer>
+        </div>
+    </t>
+
+</templates>

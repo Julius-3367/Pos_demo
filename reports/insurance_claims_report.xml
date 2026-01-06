@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Insurance Claims Report -->
+        <record id="report_insurance_claims" model="ir.actions.report">
+            <field name="name">Insurance Claims Report</field>
+            <field name="model">insurance.claim</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_demo.report_insurance_claims_document</field>
+            <field name="report_file">pos_demo.report_insurance_claims_document</field>
+            <field name="binding_model_id" ref="model_insurance_claim"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_insurance_claims_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Insurance Claim</h2>
+                            
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>Claim Number:</strong> <span t-field="o.name"/><br/>
+                                    <strong>Date:</strong> <span t-field="o.date"/><br/>
+                                    <strong>Status:</strong> <span t-field="o.state"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Patient:</strong> <span t-field="o.patient_id"/><br/>
+                                    <strong>Member Number:</strong> <span t-field="o.member_number"/><br/>
+                                    <strong>Insurance Provider:</strong> <span t-field="o.insurance_provider_id"/>
+                                </div>
+                            </div>
+
+                            <h3>Claim Items</h3>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Description</th>
+                                        <th class="text-right">Quantity</th>
+                                        <th class="text-right">Unit Price</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td><span t-field="line.product_id"/></td>
+                                        <td><span t-field="line.description"/></td>
+                                        <td class="text-right"><span t-field="line.quantity"/></td>
+                                        <td class="text-right"><span t-field="line.unit_price"/></td>
+                                        <td class="text-right"><span t-field="line.amount"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row">
+                                <div class="col-6 offset-6">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><strong>Total Amount:</strong></td>
+                                            <td class="text-right"><span t-field="o.total_amount"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Patient Co-payment:</strong></td>
+                                            <td class="text-right"><span t-field="o.patient_copay"/></td>
+                                        </tr>
+                                        <tr class="border-top">
+                                            <td><strong>Insurance Payment:</strong></td>
+                                            <td class="text-right"><strong><span t-field="o.insurance_payment"/></strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <t t-if="o.preauth_number">
+                                <p class="mt16"><strong>Pre-authorization Number:</strong> <span t-field="o.preauth_number"/></p>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

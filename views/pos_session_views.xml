@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- POS Session Form View Extension for Pharmacy -->
+        <record id="pos_session_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">pos.session.form.pharmacy</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Add Opening Balance Section -->
+                <xpath expr="//sheet" position="inside">
+                    <group string="Opening Balance" invisible="state not in ['opening_control', 'opened', 'closing_control', 'closed']">
+                        <group>
+                            <field name="opening_cash" readonly="state != 'opening_control'"/>
+                            <field name="opening_notes" readonly="state != 'opening_control'"/>
+                        </group>
+                    </group>
+                </xpath>
+                
+                <!-- Add Closing Balance Section -->
+                <xpath expr="//sheet" position="inside">
+                    <group string="Closing Balance" invisible="state not in ['closing_control', 'closed']">
+                        <group>
+                            <field name="closing_cash_counted" readonly="state == 'closed'"/>
+                            <field name="cash_difference" 
+                                   decoration-danger="cash_difference &lt; -0.01 or cash_difference &gt; 0.01"
+                                   decoration-success="cash_difference &gt;= -0.01 and cash_difference &lt;= 0.01"/>
+                        </group>
+                        <group>
+                            <field name="closing_card_total" readonly="1"/>
+                            <field name="closing_mpesa_total" readonly="1"/>
+                            <field name="closing_insurance_total" readonly="1"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="closing_notes" readonly="state == 'closed'"/>
+                        </group>
+                    </group>
+                </xpath>
+                
+                <!-- Add Session Summary Section -->
+                <xpath expr="//sheet" position="inside">
+                    <group string="Session Summary" invisible="state not in ['closing_control', 'closed']">
+                        <group>
+                            <field name="total_sales" readonly="1" widget="monetary"/>
+                            <field name="prescription_sales" readonly="1" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="otc_sales" readonly="1" widget="monetary"/>
+                            <field name="insurance_sales" readonly="1" widget="monetary"/>
+                        </group>
+                    </group>
+                </xpath>
+                
+                <!-- Add Insurance Claims Button -->
+                <xpath expr="//header" position="inside">
+                    <button name="action_view_insurance_claims" 
+                            type="object" 
+                            string="Insurance Claims"
+                            class="oe_stat_button" 
+                            icon="fa-medkit"
+                            invisible="insurance_sales == 0"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <!-- POS Session Tree View Extension -->
+        <record id="pos_session_tree_view_pharmacy" model="ir.ui.view">
+            <field name="name">pos.session.tree.pharmacy</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="opening_cash" optional="hide"/>
+                    <field name="closing_cash_counted" optional="hide"/>
+                    <field name="cash_difference" optional="show" 
+                           decoration-danger="cash_difference &lt; -0.01 or cash_difference &gt; 0.01"
+                           decoration-success="cash_difference &gt;= -0.01 and cash_difference &lt;= 0.01"/>
+                    <field name="total_sales" optional="show" sum="Total Sales"/>
+                    <field name="insurance_sales" optional="show" sum="Total Insurance"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Cash Denomination Form for Opening -->
+        <record id="pos_session_cash_opening_wizard" model="ir.ui.view">
+            <field name="name">pos.session.cash.opening.wizard</field>
+            <field name="model">pos.session</field>
+            <field name="arch" type="xml">
+                <form string="Opening Cash Balance">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="config_id" readonly="1"/>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="start_at" readonly="1"/>
+                                <field name="opening_cash" required="1"/>
+                            </group>
+                        </group>
+                        <group string="Opening Notes">
+                            <field name="opening_notes" nolabel="1" placeholder="Any notes about the opening balance..."/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Open Session" name="action_pos_session_open" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Cash Denomination Form for Closing -->
+        <record id="pos_session_cash_closing_wizard" model="ir.ui.view">
+            <field name="name">pos.session.cash.closing.wizard</field>
+            <field name="model">pos.session</field>
+            <field name="arch" type="xml">
+                <form string="Closing Cash Balance">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="config_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="total_sales" readonly="1" widget="monetary"/>
+                                <field name="cash_register_balance_end" readonly="1" widget="monetary" string="Expected Cash"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Cash Count">
+                            <group>
+                                <field name="closing_cash_counted" required="1" widget="monetary"/>
+                                <field name="cash_difference" readonly="1" widget="monetary"
+                                       decoration-danger="cash_difference &lt; -0.01 or cash_difference &gt; 0.01"
+                                       decoration-success="cash_difference &gt;= -0.01 and cash_difference &lt;= 0.01"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Payment Method Totals">
+                            <group>
+                                <field name="closing_card_total" readonly="1" widget="monetary"/>
+                                <field name="closing_mpesa_total" readonly="1" widget="monetary"/>
+                            </group>
+                            <group>
+                                <field name="closing_insurance_total" readonly="1" widget="monetary"/>
+                            </group>
+                        </group>
+                        
+                        <group string="Closing Notes">
+                            <field name="closing_notes" nolabel="1" placeholder="Any discrepancies or notes about closing..."/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Close Session" name="action_pos_session_closing_control" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Payment Method Form Extension -->
+        <record id="pos_payment_method_form_pharmacy" model="ir.ui.view">
+            <field name="name">pos.payment.method.form.pharmacy</field>
+            <field name="model">pos.payment.method</field>
+            <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_insurance"/>
+                    <field name="insurance_provider_ids" widget="many2many_tags" 
+                           invisible="not is_insurance"
+                           placeholder="Select insurance providers..."/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Payment Method Tree Extension -->
+        <record id="pos_payment_method_tree_pharmacy" model="ir.ui.view">
+            <field name="name">pos.payment.method.tree.pharmacy</field>
+            <field name="model">pos.payment.method</field>
+            <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="is_insurance" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_pos_session_cashier"
+                  name="My Sessions"
+                  parent="point_of_sale.menu_point_of_sale"
+                  action="point_of_sale.action_pos_session"
+                  sequence="3"
+                  groups="point_of_sale.group_pos_user"/>
+
+    </data>
+</odoo>

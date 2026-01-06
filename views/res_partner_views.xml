@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Partner Form View Extension -->
+        <record id="res_partner_form_view_pharmacy" model="ir.ui.view">
+            <field name="name">res.partner.form.pharmacy</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Patient Information" name="patient" invisible="'is_patient', '=', False">
+                        <group>
+                            <group string="Personal Details">
+                                <field name="is_patient"/>
+                                <field name="patient_id_number"/>
+                                <field name="date_of_birth"/>
+                                <field name="gender"/>
+                                <field name="blood_group"/>
+                            </group>
+                            <group string="Insurance">
+                                <field name="insurance_provider_id"/>
+                                <field name="insurance_member_number"/>
+                                <field name="insurance_valid_until"/>
+                                <field name="insurance_active" widget="boolean_toggle"/>
+                            </group>
+                        </group>
+                        <group string="Medical Information">
+                            <field name="allergies" placeholder="Known drug allergies..."/>
+                            <field name="medical_conditions" placeholder="Chronic or significant medical conditions..."/>
+                        </group>
+                        <group>
+                            <button name="action_view_prescriptions" type="object" class="btn-link">
+                                <field name="prescription_count"/> Prescription(s)
+                            </button>
+                        </group>
+                    </page>
+                    <page string="Prescriber Information" name="prescriber" invisible="'is_prescriber', '=', False">
+                        <group>
+                            <field name="is_prescriber"/>
+                            <field name="prescriber_license_number"/>
+                            <field name="prescriber_specialty"/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

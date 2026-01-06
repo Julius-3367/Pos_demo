@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- This file can contain reference data for drug schedules -->
+        <!-- Kenya PPB drug schedules are already defined in the product model -->
+        <!-- Additional reference data can be added here as needed -->
+
+    </data>
+</odoo>

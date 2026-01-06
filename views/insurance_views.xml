@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Insurance Provider Views -->
+        <record id="insurance_provider_tree_view" model="ir.ui.view">
+            <field name="name">insurance.provider.tree</field>
+            <field name="model">insurance.provider</field>
+            <field name="arch" type="xml">
+                <list string="Insurance Providers">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="provider_type"/>
+                    <field name="copay_percentage"/>
+                    <field name="claim_count"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="insurance_provider_form_view" model="ir.ui.view">
+            <field name="name">insurance.provider.form</field>
+            <field name="model">insurance.provider</field>
+            <field name="arch" type="xml">
+                <form string="Insurance Provider">
+                    <sheet>
+                        
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="'active', '=', True"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="provider_type"/>
+                                <field name="active" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="copay_percentage"/>
+                                <field name="coverage_percentage"/>
+                                <field name="requires_preauth"/>
+                                <field name="preauth_threshold" invisible="'requires_preauth', '=', False"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Contact Information" name="contact">
+                                <group>
+                                    <group>
+                                        <field name="contact_person"/>
+                                        <field name="phone"/>
+                                        <field name="email" widget="email"/>
+                                        <field name="website" widget="url"/>
+                                    </group>
+                                    <group>
+                                        <field name="partner_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Claims Processing" name="claims">
+                                <group>
+                                    <group>
+                                        <field name="claim_submission_method"/>
+                                        <field name="api_endpoint" invisible="'claim_submission_method', '!=', 'api'"/>
+                                        <field name="api_key" password="True" invisible="'claim_submission_method', '!=', 'api'"/>
+                                    </group>
+                                    <group>
+                                        <field name="portal_url" widget="url" invisible="'claim_submission_method', '!=', 'portal'"/>
+                                        <field name="submission_email" widget="email" invisible="'claim_submission_method', '!=', 'email'"/>
+                                        <field name="average_processing_days"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Insurance Claim Views -->
+        <record id="insurance_claim_tree_view" model="ir.ui.view">
+            <field name="name">insurance.claim.tree</field>
+            <field name="model">insurance.claim</field>
+            <field name="arch" type="xml">
+                <list string="Insurance Claims" decoration-info="state=='draft'" decoration-success="state=='paid'">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="patient_id"/>
+                    <field name="insurance_provider_id"/>
+                    <field name="total_amount" sum="Total"/>
+                    <field name="approved_amount" sum="Approved"/>
+                    <field name="insurance_payment" sum="Insurance Payment"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="insurance_claim_form_view" model="ir.ui.view">
+            <field name="name">insurance.claim.form</field>
+            <field name="model">insurance.claim</field>
+            <field name="arch" type="xml">
+                <form string="Insurance Claim">
+                    <header>
+                        <button name="action_submit" string="Submit Claim" type="object" class="oe_highlight" invisible="state not in ['draft']"/>
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight" invisible="state not in ['submitted']" groups="pos_demo.group_pharmacy_manager"/>
+                        <button name="action_reject" string="Reject" type="object" invisible="state not in ['submitted']" groups="pos_demo.group_pharmacy_manager"/>
+                        <button name="action_mark_paid" string="Mark as Paid" type="object" class="oe_highlight" invisible="state not in ['approved','partial']" groups="pos_demo.group_pharmacy_manager"/>
+                        <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state not in ['rejected','cancelled']"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient_id"/>
+                                <field name="insurance_provider_id"/>
+                                <field name="member_number"/>
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="preauth_number"/>
+                                <field name="preauth_amount"/>
+                                <field name="pos_order_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Claim Items" name="items">
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="description"/>
+                                        <field name="quantity"/>
+                                        <field name="unit_price"/>
+                                        <field name="amount" sum="Total"/>
+                                        <field name="approved"/>
+                                        <field name="rejection_reason" invisible="'approved', '=', True"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer">
+                                    <field name="total_amount" widget="monetary"/>
+                                    <field name="approved_amount"/>
+                                    <field name="patient_copay"/>
+                                    <field name="insurance_payment" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </page>
+                            <page string="Status &amp; Tracking" name="tracking">
+                                <group>
+                                    <group>
+                                        <field name="submission_date"/>
+                                        <field name="response_date"/>
+                                        <field name="payment_date"/>
+                                    </group>
+                                    <group>
+                                        <field name="payment_reference"/>
+                                        <field name="rejection_reason" invisible="'state', '!=', 'rejected'"/>
+                                    </group>
+                                </group>
+                                <field name="notes" placeholder="Internal notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- Actions -->
+        <record id="action_insurance_provider" model="ir.actions.act_window">
+            <field name="name">Insurance Providers</field>
+            <field name="res_model">insurance.provider</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_insurance_claim" model="ir.actions.act_window">
+            <field name="name">Insurance Claims</field>
+            <field name="res_model">insurance.claim</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem id="menu_pharmacy_insurance"
+                  name="Insurance"
+                  parent="menu_pharmacy_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_insurance_providers"
+                  name="Insurance Providers"
+                  parent="menu_pharmacy_insurance"
+                  action="action_insurance_provider"
+                  sequence="10"/>
+
+        <menuitem id="menu_insurance_claims"
+                  name="Insurance Claims"
+                  parent="menu_pharmacy_insurance"
+                  action="action_insurance_claim"
+                  sequence="20"/>
+
+    </data>
+</odoo>

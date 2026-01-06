@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Prescription Report Template -->
+        <record id="report_prescription" model="ir.actions.report">
+            <field name="name">Prescription</field>
+            <field name="model">pharmacy.prescription</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">pos_demo.report_prescription_document</field>
+            <field name="report_file">pos_demo.report_prescription_document</field>
+            <field name="binding_model_id" ref="model_pharmacy_prescription"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_prescription_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Prescription</h2>
+                            <div class="row mt32 mb32">
+                                <div class="col-6">
+                                    <strong>Prescription Number:</strong> <span t-field="o.name"/><br/>
+                                    <strong>Date:</strong> <span t-field="o.date"/><br/>
+                                    <strong>Status:</strong> <span t-field="o.state"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Patient:</strong> <span t-field="o.patient_id"/><br/>
+                                    <strong>Patient Age:</strong> <span t-field="o.patient_age"/> years<br/>
+                                    <strong>Prescriber:</strong> <span t-field="o.prescriber_id"/><br/>
+                                    <strong>License:</strong> <span t-field="o.prescriber_license"/>
+                                </div>
+                            </div>
+
+                            <t t-if="o.diagnosis">
+                                <p><strong>Diagnosis:</strong> <span t-field="o.diagnosis"/></p>
+                            </t>
+
+                            <h3>Medications</h3>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Medication</th>
+                                        <th>Dosage</th>
+                                        <th>Frequency</th>
+                                        <th>Duration</th>
+                                        <th>Quantity</th>
+                                        <th>Instructions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.line_ids" t-as="line">
+                                        <td><span t-field="line.product_id"/></td>
+                                        <td><span t-field="line.dosage"/></td>
+                                        <td><span t-field="line.frequency"/></td>
+                                        <td><span t-field="line.duration"/></td>
+                                        <td><span t-field="line.quantity"/></td>
+                                        <td><span t-field="line.instructions"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <t t-if="o.special_instructions">
+                                <p><strong>Special Instructions:</strong> <span t-field="o.special_instructions"/></p>
+                            </t>
+
+                            <div class="row mt64">
+                                <div class="col-6">
+                                    <p>
+                                        __________________________<br/>
+                                        Prescriber Signature
+                                    </p>
+                                </div>
+                                <div class="col-6">
+                                    <p>
+                                        __________________________<br/>
+                                        Pharmacist Signature
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

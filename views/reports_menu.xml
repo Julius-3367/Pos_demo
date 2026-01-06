@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Reports Menu -->
+        <menuitem id="menu_pharmacy_reports"
+                  name="Pharmacy Reports"
+                  parent="menu_pharmacy_root"
+                  sequence="100"/>
+
+        <!-- Report Actions -->
+        <record id="action_report_ppb_monthly_returns" model="ir.actions.act_window">
+            <field name="name">PPB Monthly Returns</field>
+            <field name="res_model">controlled.drugs.register</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="context">{'group_by': ['product_id', 'transaction_type']}</field>
+        </record>
+
+        <record id="action_report_expiry_analysis" model="ir.actions.act_window">
+            <field name="name">Expiry Analysis</field>
+            <field name="res_model">stock.lot</field>
+            <field name="view_mode">pivot,graph,tree</field>
+            <field name="domain">[('expiry_date', '!=', False)]</field>
+            <field name="context">{'group_by': ['expiry_date']}</field>
+        </record>
+
+        <record id="action_report_insurance_claims_summary" model="ir.actions.act_window">
+            <field name="name">Insurance Claims Summary</field>
+            <field name="res_model">insurance.claim</field>
+            <field name="view_mode">pivot,graph,tree</field>
+            <field name="context">{'group_by': ['insurance_provider_id', 'state']}</field>
+        </record>
+
+        <!-- Report Menus -->
+        <menuitem id="menu_report_ppb_returns"
+                  name="PPB Monthly Returns"
+                  parent="menu_pharmacy_reports"
+                  action="action_report_ppb_monthly_returns"
+                  sequence="10"
+                  groups="pos_demo.group_pharmacist,pos_demo.group_pharmacy_manager"/>
+
+        <menuitem id="menu_report_expiry"
+                  name="Expiry Analysis"
+                  parent="menu_pharmacy_reports"
+                  action="action_report_expiry_analysis"
+                  sequence="20"/>
+
+        <menuitem id="menu_report_insurance"
+                  name="Insurance Claims Summary"
+                  parent="menu_pharmacy_reports"
+                  action="action_report_insurance_claims_summary"
+                  sequence="30"/>
+
+    </data>
+</odoo>
