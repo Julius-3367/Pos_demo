@@ -35,5 +35,19 @@
             </field>
         </record>
 
+        <!-- Open Pharmacy POS Action -->
+        <record id="action_open_pharmacy_pos" model="ir.actions.client">
+            <field name="name">Open Pharmacy POS</field>
+            <field name="tag">point_of_sale.ui</field>
+            <field name="context">{'pos_config_id': %(pos_demo.pos_config_pharmacy_main)d}</field>
+        </record>
+
+        <!-- Menu Item to Open POS -->
+        <menuitem id="menu_pharmacy_pos_shop"
+                  name="Shop (POS)"
+                  parent="menu_pharmacy_root"
+                  action="action_open_pharmacy_pos"
+                  sequence="5"/>
+
     </data>
 </odoo>

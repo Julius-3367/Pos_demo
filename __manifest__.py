@@ -46,6 +46,7 @@
         'data/drug_schedules.xml',
         'data/insurance_providers.xml',
         'data/sequence.xml',
+        'data/pos_config_data.xml',
         
         # Views
         'views/product_views.xml',
@@ -55,6 +56,7 @@
         'views/insurance_views.xml',
         'views/controlled_drugs_views.xml',
         'views/res_partner_views.xml',
+        'views/accounting_views.xml',
         'views/reports_menu.xml',
         'views/demo_data_views.xml',
         

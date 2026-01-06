@@ -12,3 +12,4 @@ from . import insurance_provider
 from . import insurance_claim
 from . import controlled_drugs_register
 from . import pharmacy_demo_data
+from . import account_move

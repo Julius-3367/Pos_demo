@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Pharmacy Invoices View -->
+        <record id="view_pharmacy_invoice_tree" model="ir.ui.view">
+            <field name="name">account.move.pharmacy.tree</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <list string="Pharmacy Invoices" decoration-info="state=='draft'" decoration-success="state=='posted'">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="invoice_date"/>
+                    <field name="prescription_id"/>
+                    <field name="insurance_claim_id"/>
+                    <field name="amount_total"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Pharmacy Invoices Action -->
+        <record id="action_pharmacy_invoices" model="ir.actions.act_window">
+            <field name="name">Pharmacy Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_pharmacy_invoice', '=', True), ('move_type', 'in', ['out_invoice', 'out_refund'])]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+        </record>
+
+        <!-- Pharmacy Revenue Report Action -->
+        <record id="action_pharmacy_revenue_report" model="ir.actions.act_window">
+            <field name="name">Revenue Report</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">list,pivot,graph</field>
+            <field name="domain">[('is_pharmacy_invoice', '=', True), ('state', '=', 'posted'), ('move_type', '=', 'out_invoice')]</field>
+            <field name="context">{'search_default_group_by_date': 1}</field>
+        </record>
+
+        <!-- Accounting Menu -->
+        <menuitem id="menu_pharmacy_accounting"
+                  name="Accounting"
+                  parent="menu_pharmacy_root"
+                  sequence="60"/>
+
+        <menuitem id="menu_pharmacy_invoices"
+                  name="Invoices"
+                  parent="menu_pharmacy_accounting"
+                  action="action_pharmacy_invoices"
+                  sequence="10"/>
+
+        <menuitem id="menu_pharmacy_revenue"
+                  name="Revenue Report"
+                  parent="menu_pharmacy_accounting"
+                  action="action_pharmacy_revenue_report"
+                  sequence="20"/>
+
+        <!-- Link to Full Accounting -->
+        <menuitem id="menu_pharmacy_accounting_full"
+                  name="Full Accounting"
+                  parent="menu_pharmacy_accounting"
+                  action="account.action_move_out_invoice_type"
+                  sequence="30"/>
+
+    </data>
+</odoo>
