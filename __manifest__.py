@@ -47,6 +47,7 @@
         'data/insurance_providers.xml',
         'data/sequence.xml',
         'data/pos_config_data.xml',
+        'data/test_data_kenya.xml',
         
         # Views
         'views/product_views.xml',

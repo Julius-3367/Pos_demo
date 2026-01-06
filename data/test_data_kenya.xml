@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Kenyan Patients -->
+        <record id="patient_wanjiku_kamau" model="res.partner">
+            <field name="name">Wanjiku Kamau</field>
+            <field name="is_patient" eval="True"/>
+            <field name="phone">+254 722 123 456</field>
+            <field name="email">wanjiku.kamau@gmail.com</field>
+            <field name="date_of_birth">1985-03-15</field>
+            <field name="patient_id_number">12345678</field>
+            <field name="insurance_member_number">123456789</field>
+            <field name="blood_group">o_positive</field>
+            <field name="gender">female</field>
+            <field name="street">Kimathi Street</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="patient_john_omondi" model="res.partner">
+            <field name="name">John Omondi Otieno</field>
+            <field name="is_patient" eval="True"/>
+            <field name="phone">+254 733 987 654</field>
+            <field name="email">j.omondi@yahoo.com</field>
+            <field name="date_of_birth">1978-07-22</field>
+            <field name="patient_id_number">23456789</field>
+            <field name="insurance_member_number">234567890</field>
+            <field name="blood_group">a_positive</field>
+            <field name="gender">male</field>
+            <field name="insurance_provider_id" ref="insurance_provider_nhif"/>
+            <field name="insurance_active" eval="True"/>
+            <field name="street">Tom Mboya Street</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="patient_fatuma_mohamed" model="res.partner">
+            <field name="name">Fatuma Mohamed Hassan</field>
+            <field name="is_patient" eval="True"/>
+            <field name="phone">+254 710 456 789</field>
+            <field name="email">fatuma.hassan@gmail.com</field>
+            <field name="date_of_birth">1992-11-08</field>
+            <field name="patient_id_number">34567890</field>
+            <field name="blood_group">b_positive</field>
+            <field name="gender">female</field>
+            <field name="street">Moi Avenue</field>
+            <field name="city">Mombasa</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="patient_peter_mwangi" model="res.partner">
+            <field name="name">Peter Mwangi Kariuki</field>
+            <field name="is_patient" eval="True"/>
+            <field name="phone">+254 720 111 222</field>
+            <field name="email">peter.mwangi@hotmail.com</field>
+            <field name="date_of_birth">1965-05-12</field>
+            <field name="patient_id_number">45678901</field>
+            <field name="insurance_member_number">345678901</field>
+            <field name="blood_group">ab_positive</field>
+            <field name="gender">male</field>
+            <field name="insurance_provider_id" ref="insurance_provider_aar"/>
+            <field name="insurance_active" eval="True"/>
+            <field name="street">Kenyatta Avenue</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+            <field name="allergies">Penicillin</field>
+        </record>
+
+        <!-- Kenyan Doctors/Prescribers -->
+        <record id="doctor_njoroge" model="res.partner">
+            <field name="name">Dr. James Njoroge Maina</field>
+            <field name="is_prescriber" eval="True"/>
+            <field name="phone">+254 722 999 888</field>
+            <field name="email">dr.njoroge@nairobihosp.co.ke</field>
+            <field name="prescriber_license_number">KMA-12345</field>
+            <field name="prescriber_specialization">General Practice</field>
+            <field name="street">Nairobi Hospital</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="doctor_akinyi" model="res.partner">
+            <field name="name">Dr. Grace Akinyi Odhiambo</field>
+            <field name="is_prescriber" eval="True"/>
+            <field name="phone">+254 733 555 444</field>
+            <field name="email">dr.akinyi@akhospital.or.ke</field>
+            <field name="prescriber_license_number">KMA-23456</field>
+            <field name="prescriber_specialization">Pediatrics</field>
+            <field name="street">Aga Khan Hospital</field>
+            <field name="city">Nairobi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <!-- Pharmaceutical Products (Kenyan brands) -->
+        <record id="product_panadol_500mg" model="product.product">
+            <field name="name">Panadol 500mg</field>
+            <field name="list_price">120.00</field>
+            <field name="standard_price">80.00</field>
+            <field name="is_pharmaceutical" eval="True"/>
+            <field name="requires_prescription" eval="False"/>
+            <field name="generic_name">Paracetamol</field>
+            <field name="strength">500mg</field>
+            <field name="dosage_form">Tablet</field>
+            <field name="manufacturer">GlaxoSmithKline Kenya</field>
+            <field name="categ_id" ref="product_category_otc"/>
+            <field name="available_in_pos" eval="True"/>
+        </record>
+
+        <record id="product_amoxil_250mg" model="product.product">
+            <field name="name">Amoxil 250mg</field>
+            <field name="list_price">450.00</field>
+            <field name="standard_price">300.00</field>
+            <field name="is_pharmaceutical" eval="True"/>
+            <field name="requires_prescription" eval="True"/>
+            <field name="generic_name">Amoxicillin</field>
+            <field name="strength">250mg</field>
+            <field name="dosage_form">Capsule</field>
+            <field name="manufacturer">Dawa Limited</field>
+            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="available_in_pos" eval="True"/>
+        </record>
+
+        <record id="product_septrin_480mg" model="product.product">
+            <field name="name">Septrin 480mg</field>
+            <field name="list_price">85.00</field>
+            <field name="standard_price">55.00</field>
+            <field name="is_pharmaceutical" eval="True"/>
+            <field name="requires_prescription" eval="True"/>
+            <field name="generic_name">Cotrimoxazole</field>
+            <field name="strength">480mg</field>
+            <field name="dosage_form">Tablet</field>
+            <field name="manufacturer">Universal Corporation Kenya</field>
+            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="available_in_pos" eval="True"/>
+        </record>
+
+        <record id="product_metformin_500mg" model="product.product">
+            <field name="name">Metformin 500mg</field>
+            <field name="list_price">25.00</field>
+            <field name="standard_price">15.00</field>
+            <field name="is_pharmaceutical" eval="True"/>
+            <field name="requires_prescription" eval="True"/>
+            <field name="generic_name">Metformin HCL</field>
+            <field name="strength">500mg</field>
+            <field name="dosage_form">Tablet</field>
+            <field name="manufacturer">Cosmos Limited Kenya</field>
+            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="available_in_pos" eval="True"/>
+        </record>
+
+        <record id="product_piriton_4mg" model="product.product">
+            <field name="name">Piriton 4mg</field>
+            <field name="list_price">180.00</field>
+            <field name="standard_price">120.00</field>
+            <field name="is_pharmaceutical" eval="True"/>
+            <field name="requires_prescription" eval="False"/>
+            <field name="generic_name">Chlorpheniramine</field>
+            <field name="strength">4mg</field>
+            <field name="dosage_form">Tablet</field>
+            <field name="manufacturer">GlaxoSmithKline Kenya</field>
+            <field name="categ_id" ref="product_category_otc"/>
+            <field name="available_in_pos" eval="True"/>
+        </record>
+
+        <!-- Stock Lots/Batches with Expiry Dates -->
+        <record id="lot_panadol_batch1" model="stock.lot">
+            <field name="name">PNDL-2024-001</field>
+            <field name="product_id" ref="product_panadol_500mg"/>
+            <field name="expiration_date" eval="(datetime.now() + timedelta(days=730)).strftime('%Y-%m-%d')"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="lot_amoxil_batch1" model="stock.lot">
+            <field name="name">AMXL-2024-002</field>
+            <field name="product_id" ref="product_amoxil_250mg"/>
+            <field name="expiration_date" eval="(datetime.now() + timedelta(days=545)).strftime('%Y-%m-%d')"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="lot_septrin_batch1" model="stock.lot">
+            <field name="name">SPTR-2024-003</field>
+            <field name="product_id" ref="product_septrin_480mg"/>
+            <field name="expiration_date" eval="(datetime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Prescriptions -->
+        <record id="prescription_wanjiku_001" model="pharmacy.prescription">
+            <field name="patient_id" ref="patient_wanjiku_kamau"/>
+            <field name="prescriber_id" ref="doctor_njoroge"/>
+            <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="diagnosis">Upper Respiratory Tract Infection</field>
+            <field name="notes">Patient reports fever and cough for 3 days</field>
+            <field name="state">validated</field>
+        </record>
+
+        <record id="prescription_line_wanjiku_amoxil" model="pharmacy.prescription.line">
+            <field name="prescription_id" ref="prescription_wanjiku_001"/>
+            <field name="product_id" ref="product_amoxil_250mg"/>
+            <field name="quantity">21</field>
+            <field name="dosage">250mg</field>
+            <field name="frequency">Three times daily</field>
+            <field name="duration">7 days</field>
+            <field name="route">Oral</field>
+            <field name="instructions">Take after meals with plenty of water</field>
+        </record>
+
+        <record id="prescription_line_wanjiku_panadol" model="pharmacy.prescription.line">
+            <field name="prescription_id" ref="prescription_wanjiku_001"/>
+            <field name="product_id" ref="product_panadol_500mg"/>
+            <field name="quantity">12</field>
+            <field name="dosage">500mg</field>
+            <field name="frequency">Twice daily</field>
+            <field name="duration">6 days</field>
+            <field name="route">Oral</field>
+            <field name="instructions">Take when needed for fever or pain</field>
+        </record>
+
+        <record id="prescription_peter_diabetes" model="pharmacy.prescription">
+            <field name="patient_id" ref="patient_peter_mwangi"/>
+            <field name="prescriber_id" ref="doctor_njoroge"/>
+            <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="diagnosis">Type 2 Diabetes Mellitus</field>
+            <field name="notes">Regular follow-up patient. Monitor blood sugar levels.</field>
+            <field name="state">validated</field>
+        </record>
+
+        <record id="prescription_line_peter_metformin" model="pharmacy.prescription.line">
+            <field name="prescription_id" ref="prescription_peter_diabetes"/>
+            <field name="product_id" ref="product_metformin_500mg"/>
+            <field name="quantity">60</field>
+            <field name="dosage">500mg</field>
+            <field name="frequency">Twice daily</field>
+            <field name="duration">30 days</field>
+            <field name="route">Oral</field>
+            <field name="instructions">Take with breakfast and dinner</field>
+        </record>
+
+        <record id="prescription_fatuma_allergy" model="pharmacy.prescription">
+            <field name="patient_id" ref="patient_fatuma_mohamed"/>
+            <field name="prescriber_id" ref="doctor_akinyi"/>
+            <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="diagnosis">Allergic Rhinitis</field>
+            <field name="notes">Seasonal allergies</field>
+            <field name="state">validated</field>
+        </record>
+
+        <record id="prescription_line_fatuma_piriton" model="pharmacy.prescription.line">
+            <field name="prescription_id" ref="prescription_fatuma_allergy"/>
+            <field name="product_id" ref="product_piriton_4mg"/>
+            <field name="quantity">20</field>
+            <field name="dosage">4mg</field>
+            <field name="frequency">Once daily at bedtime</field>
+            <field name="duration">20 days</field>
+            <field name="route">Oral</field>
+            <field name="instructions">May cause drowsiness, avoid driving</field>
+        </record>
+
+        <!-- Insurance Claims -->
+        <record id="insurance_claim_john_001" model="insurance.claim">
+            <field name="patient_id" ref="patient_john_omondi"/>
+            <field name="provider_id" ref="insurance_provider_nhif"/>
+            <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
+            <field name="total_amount">1500.00</field>
+            <field name="state">approved</field>
+            <field name="approved_amount">1200.00</field>
+            <field name="preauth_number">NHIF-2026-001</field>
+        </record>
+
+        <record id="insurance_claim_line_john_001" model="insurance.claim.line">
+            <field name="claim_id" ref="insurance_claim_john_001"/>
+            <field name="product_id" ref="product_septrin_480mg"/>
+            <field name="quantity">20</field>
+            <field name="unit_price">85.00</field>
+            <field name="approved" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
