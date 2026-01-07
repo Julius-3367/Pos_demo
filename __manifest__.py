@@ -50,6 +50,7 @@
         'data/drug_schedules.xml',
         'data/insurance_providers.xml',
         'data/sequence.xml',
+        'data/payment_methods.xml',
         # 'data/pos_config_data.xml',  # Install chart of accounts first, then uncomment and upgrade
         'data/test_data_kenya.xml',
         

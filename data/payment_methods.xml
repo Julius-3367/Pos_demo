@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- M-PESA Payment Method -->
+        <record id="payment_method_mpesa" model="pos.payment.method">
+            <field name="name">M-PESA</field>
+            <field name="is_cash_count" eval="False"/>
+            <field name="split_transactions" eval="False"/>
+        </record>
+
+        <!-- Card Payment Method -->
+        <record id="payment_method_card" model="pos.payment.method">
+            <field name="name">Card/Bank Transfer</field>
+            <field name="is_cash_count" eval="False"/>
+            <field name="split_transactions" eval="False"/>
+        </record>
+
+        <!-- Insurance Payment Method -->
+        <record id="payment_method_insurance" model="pos.payment.method">
+            <field name="name">Insurance</field>
+            <field name="is_cash_count" eval="False"/>
+            <field name="split_transactions" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
