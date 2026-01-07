@@ -5,6 +5,8 @@
         <!-- Pharmacy POS Configuration -->
         <record id="pos_config_pharmacy_main" model="pos.config">
             <field name="name">Pharmacy Main Counter</field>
+            
+            <!-- Pharmacy Features -->
             <field name="is_pharmacy_pos" eval="True"/>
             <field name="enforce_prescription_check" eval="True"/>
             <field name="require_pharmacist_validation" eval="True"/>
@@ -13,6 +15,24 @@
             <field name="block_expired_sales" eval="True"/>
             <field name="enforce_lot_selection" eval="True"/>
             <field name="use_fefo_logic" eval="True"/>
+            
+            <!-- Cash Control -->
+            <field name="cash_control" eval="True"/>
+            
+            <!-- Receipt Printing -->
+            <field name="iface_print_auto" eval="True"/>
+            <field name="iface_print_skip_screen" eval="True"/>
+            <field name="receipt_header">Options Pharmacy - Kenya
+Reg. No: PPB/PH/12345
+PIN: P051234567X
+Tel: +254 712 345 678</field>
+            <field name="receipt_footer">Thank you for your visit!
+For inquiries, call: +254 712 345 678
+Operating Hours: Mon-Sat 8:00-20:00</field>
+            
+            <!-- Payment Methods -->
+            <field name="module_pos_mercury" eval="False"/>
+            
         </record>
 
     </data>

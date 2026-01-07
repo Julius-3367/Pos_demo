@@ -74,7 +74,7 @@
             <field name="phone">+254 722 999 888</field>
             <field name="email">dr.njoroge@nairobihosp.co.ke</field>
             <field name="prescriber_license_number">KMA-12345</field>
-            <field name="prescriber_specialization">General Practice</field>
+            <field name="prescriber_specialty">General Practice</field>
             <field name="street">Nairobi Hospital</field>
             <field name="city">Nairobi</field>
             <field name="country_id" ref="base.ke"/>
@@ -86,7 +86,7 @@
             <field name="phone">+254 733 555 444</field>
             <field name="email">dr.akinyi@akhospital.or.ke</field>
             <field name="prescriber_license_number">KMA-23456</field>
-            <field name="prescriber_specialization">Pediatrics</field>
+            <field name="prescriber_specialty">Pediatrics</field>
             <field name="street">Aga Khan Hospital</field>
             <field name="city">Nairobi</field>
             <field name="country_id" ref="base.ke"/>
@@ -99,10 +99,9 @@
             <field name="standard_price">80.00</field>
             <field name="is_pharmaceutical" eval="True"/>
             <field name="requires_prescription" eval="False"/>
-            <field name="generic_name">Paracetamol</field>
-            <field name="strength">500mg</field>
-            <field name="dosage_form">Tablet</field>
-            <field name="manufacturer">GlaxoSmithKline Kenya</field>
+            <field name="drug_generic_name">Paracetamol</field>
+            <field name="drug_strength">500mg</field>
+            <field name="drug_dosage_form">tablet</field>
             <field name="categ_id" ref="product_category_otc"/>
             <field name="available_in_pos" eval="True"/>
         </record>
@@ -113,11 +112,10 @@
             <field name="standard_price">300.00</field>
             <field name="is_pharmaceutical" eval="True"/>
             <field name="requires_prescription" eval="True"/>
-            <field name="generic_name">Amoxicillin</field>
-            <field name="strength">250mg</field>
-            <field name="dosage_form">Capsule</field>
-            <field name="manufacturer">Dawa Limited</field>
-            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="drug_generic_name">Amoxicillin</field>
+            <field name="drug_strength">250mg</field>
+            <field name="drug_dosage_form">capsule</field>
+            <field name="categ_id" ref="product_category_antibiotics"/>
             <field name="available_in_pos" eval="True"/>
         </record>
 
@@ -127,11 +125,10 @@
             <field name="standard_price">55.00</field>
             <field name="is_pharmaceutical" eval="True"/>
             <field name="requires_prescription" eval="True"/>
-            <field name="generic_name">Cotrimoxazole</field>
-            <field name="strength">480mg</field>
-            <field name="dosage_form">Tablet</field>
-            <field name="manufacturer">Universal Corporation Kenya</field>
-            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="drug_generic_name">Cotrimoxazole</field>
+            <field name="drug_strength">480mg</field>
+            <field name="drug_dosage_form">tablet</field>
+            <field name="categ_id" ref="product_category_antibiotics"/>
             <field name="available_in_pos" eval="True"/>
         </record>
 
@@ -141,11 +138,10 @@
             <field name="standard_price">15.00</field>
             <field name="is_pharmaceutical" eval="True"/>
             <field name="requires_prescription" eval="True"/>
-            <field name="generic_name">Metformin HCL</field>
-            <field name="strength">500mg</field>
-            <field name="dosage_form">Tablet</field>
-            <field name="manufacturer">Cosmos Limited Kenya</field>
-            <field name="categ_id" ref="product_category_prescription"/>
+            <field name="drug_generic_name">Metformin HCL</field>
+            <field name="drug_strength">500mg</field>
+            <field name="drug_dosage_form">tablet</field>
+            <field name="categ_id" ref="product_category_antidiabetics"/>
             <field name="available_in_pos" eval="True"/>
         </record>
 
@@ -155,10 +151,9 @@
             <field name="standard_price">120.00</field>
             <field name="is_pharmaceutical" eval="True"/>
             <field name="requires_prescription" eval="False"/>
-            <field name="generic_name">Chlorpheniramine</field>
-            <field name="strength">4mg</field>
-            <field name="dosage_form">Tablet</field>
-            <field name="manufacturer">GlaxoSmithKline Kenya</field>
+            <field name="drug_generic_name">Chlorpheniramine</field>
+            <field name="drug_strength">4mg</field>
+            <field name="drug_dosage_form">tablet</field>
             <field name="categ_id" ref="product_category_otc"/>
             <field name="available_in_pos" eval="True"/>
         </record>
@@ -167,21 +162,21 @@
         <record id="lot_panadol_batch1" model="stock.lot">
             <field name="name">PNDL-2024-001</field>
             <field name="product_id" ref="product_panadol_500mg"/>
-            <field name="expiration_date" eval="(datetime.now() + timedelta(days=730)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(datetime.now() + timedelta(days=730)).strftime('%Y-%m-%d')"/>
             <field name="company_id" ref="base.main_company"/>
         </record>
 
         <record id="lot_amoxil_batch1" model="stock.lot">
             <field name="name">AMXL-2024-002</field>
             <field name="product_id" ref="product_amoxil_250mg"/>
-            <field name="expiration_date" eval="(datetime.now() + timedelta(days=545)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(datetime.now() + timedelta(days=545)).strftime('%Y-%m-%d')"/>
             <field name="company_id" ref="base.main_company"/>
         </record>
 
         <record id="lot_septrin_batch1" model="stock.lot">
             <field name="name">SPTR-2024-003</field>
             <field name="product_id" ref="product_septrin_480mg"/>
-            <field name="expiration_date" eval="(datetime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(datetime.now() + timedelta(days=365)).strftime('%Y-%m-%d')"/>
             <field name="company_id" ref="base.main_company"/>
         </record>
 
@@ -191,7 +186,7 @@
             <field name="prescriber_id" ref="doctor_njoroge"/>
             <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="diagnosis">Upper Respiratory Tract Infection</field>
-            <field name="notes">Patient reports fever and cough for 3 days</field>
+            <field name="special_instructions">Patient reports fever and cough for 3 days</field>
             <field name="state">validated</field>
         </record>
 
@@ -202,7 +197,7 @@
             <field name="dosage">250mg</field>
             <field name="frequency">Three times daily</field>
             <field name="duration">7 days</field>
-            <field name="route">Oral</field>
+            <field name="route">oral</field>
             <field name="instructions">Take after meals with plenty of water</field>
         </record>
 
@@ -213,7 +208,7 @@
             <field name="dosage">500mg</field>
             <field name="frequency">Twice daily</field>
             <field name="duration">6 days</field>
-            <field name="route">Oral</field>
+            <field name="route">oral</field>
             <field name="instructions">Take when needed for fever or pain</field>
         </record>
 
@@ -222,7 +217,7 @@
             <field name="prescriber_id" ref="doctor_njoroge"/>
             <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="diagnosis">Type 2 Diabetes Mellitus</field>
-            <field name="notes">Regular follow-up patient. Monitor blood sugar levels.</field>
+            <field name="special_instructions">Regular follow-up patient. Monitor blood sugar levels.</field>
             <field name="state">validated</field>
         </record>
 
@@ -233,7 +228,7 @@
             <field name="dosage">500mg</field>
             <field name="frequency">Twice daily</field>
             <field name="duration">30 days</field>
-            <field name="route">Oral</field>
+            <field name="route">oral</field>
             <field name="instructions">Take with breakfast and dinner</field>
         </record>
 
@@ -242,7 +237,7 @@
             <field name="prescriber_id" ref="doctor_akinyi"/>
             <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
             <field name="diagnosis">Allergic Rhinitis</field>
-            <field name="notes">Seasonal allergies</field>
+            <field name="special_instructions">Seasonal allergies</field>
             <field name="state">validated</field>
         </record>
 
@@ -253,16 +248,16 @@
             <field name="dosage">4mg</field>
             <field name="frequency">Once daily at bedtime</field>
             <field name="duration">20 days</field>
-            <field name="route">Oral</field>
+            <field name="route">oral</field>
             <field name="instructions">May cause drowsiness, avoid driving</field>
         </record>
 
         <!-- Insurance Claims -->
         <record id="insurance_claim_john_001" model="insurance.claim">
             <field name="patient_id" ref="patient_john_omondi"/>
-            <field name="provider_id" ref="insurance_provider_nhif"/>
+            <field name="insurance_provider_id" ref="insurance_provider_nhif"/>
+            <field name="member_number">NHIF-123456</field>
             <field name="date" eval="datetime.now().strftime('%Y-%m-%d')"/>
-            <field name="total_amount">1500.00</field>
             <field name="state">approved</field>
             <field name="approved_amount">1200.00</field>
             <field name="preauth_number">NHIF-2026-001</field>

@@ -36,7 +36,6 @@
         </record>
 
         <!-- Open Pharmacy POS Action -->
-        <!-- Commented out until POS config is created manually
         <record id="action_open_pharmacy_pos" model="ir.actions.client">
             <field name="name">Open Pharmacy POS</field>
             <field name="tag">point_of_sale.ui</field>
@@ -48,7 +47,6 @@
                   parent="menu_pharmacy_root"
                   action="action_open_pharmacy_pos"
                   sequence="5"/>
-        -->
 
     </data>
 </odoo>

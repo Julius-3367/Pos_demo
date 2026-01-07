@@ -46,7 +46,7 @@
         'data/drug_schedules.xml',
         'data/insurance_providers.xml',
         'data/sequence.xml',
-        'data/pos_config_data.xml',
+        # 'data/pos_config_data.xml',  # Will be created manually after chart of accounts
         'data/test_data_kenya.xml',
         
         # Views
@@ -72,7 +72,7 @@
         'wizard/insurance_claim_wizard_views.xml',
     ],
     'assets': {
-        'point_of_sale._assets_pos': [
+        'point_of_sale.assets': [
             'pos_demo/static/src/js/**/*',
             'pos_demo/static/src/xml/**/*',
             'pos_demo/static/src/css/**/*',
