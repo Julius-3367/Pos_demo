@@ -50,7 +50,7 @@
         'data/drug_schedules.xml',
         'data/insurance_providers.xml',
         'data/sequence.xml',
-        # 'data/pos_config_data.xml',  # Will be created manually after chart of accounts
+        # 'data/pos_config_data.xml',  # Install chart of accounts first, then uncomment and upgrade
         'data/test_data_kenya.xml',
         
         # Views
