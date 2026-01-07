@@ -16,11 +16,12 @@
         * Expiry Date Management (FEFO)
         * Patient Records & Allergy Alerts
         * Drug Interaction Warnings
-        * M-PESA Payment Integration
-        * KRA ETR Integration
-        * Batch/Lot Tracking
+        * Batch/Lot Tracking with Expiry Dates
         * Pharmacist Validation Workflow
         * PPB Monthly Returns Reports
+        * Purchase Order Management
+        * Inventory Valuation & Stock Control
+        * Barcode Support
         
         Designed for: Options Pharmacy, Kenya
     """,
@@ -30,6 +31,9 @@
     'depends': [
         'point_of_sale',
         'stock',
+        'stock_account',
+        'purchase',
+        'purchase_stock',
         'product',
         'account',
         'sale',

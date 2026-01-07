@@ -35,18 +35,8 @@
             </field>
         </record>
 
-        <!-- Open Pharmacy POS Action -->
-        <record id="action_open_pharmacy_pos" model="ir.actions.client">
-            <field name="name">Open Pharmacy POS</field>
-            <field name="tag">point_of_sale.ui</field>
-            <field name="params" eval="{'config_id': ref('pos_config_pharmacy_main')}"/>
-        </record>
-
-        <menuitem id="menu_pharmacy_pos_shop"
-                  name="Shop (POS)"
-                  parent="menu_pharmacy_root"
-                  action="action_open_pharmacy_pos"
-                  sequence="5"/>
+        <!-- POS Menu - Use standard POS menu instead of custom -->
+        <!-- Access POS via: Point of Sale > Dashboard or create shortcut in Pharmacy menu after POS config setup -->
 
     </data>
 </odoo>

@@ -58,30 +58,6 @@ class PosOrder(models.Model):
         help='Pharmacist who validated the prescription'
     )
     
-    # Payment Integration
-    mpesa_transaction_id = fields.Char(
-        string='M-PESA Transaction ID',
-        help='M-PESA confirmation code'
-    )
-    mpesa_phone = fields.Char(
-        string='M-PESA Phone Number',
-        help='Phone number used for M-PESA payment'
-    )
-    
-    # KRA ETR Integration
-    etr_cu_serial = fields.Char(
-        string='ETR Control Unit Serial',
-        help='ETR device serial number'
-    )
-    etr_receipt_number = fields.Char(
-        string='ETR Receipt Number',
-        help='Official ETR receipt number'
-    )
-    etr_qr_code = fields.Char(
-        string='ETR QR Code',
-        help='QR code for receipt verification'
-    )
-    
     # Controlled Substances
     has_controlled_substances = fields.Boolean(
         string='Has Controlled Substances',
