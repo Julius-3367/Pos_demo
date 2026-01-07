@@ -46,5 +46,86 @@
             </field>
         </record>
 
+        <!-- Patient Tree View -->
+        <record id="res_partner_tree_view_patient" model="ir.ui.view">
+            <field name="name">res.partner.tree.patient</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <list string="Patients">
+                    <field name="name"/>
+                    <field name="patient_id_number"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="city"/>
+                    <field name="insurance_provider_id"/>
+                    <field name="prescription_count"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Prescriber Tree View -->
+        <record id="res_partner_tree_view_prescriber" model="ir.ui.view">
+            <field name="name">res.partner.tree.prescriber</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <list string="Prescribers">
+                    <field name="name"/>
+                    <field name="prescriber_license_number"/>
+                    <field name="prescriber_specialty"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Patient Action -->
+        <record id="action_pharmacy_patient" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_patient', '=', True)]</field>
+            <field name="context">{'default_is_patient': True}</field>
+            <field name="view_id" ref="res_partner_tree_view_patient"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new patient
+                </p>
+                <p>
+                    Register patients to track their prescriptions, medical history, and insurance information.
+                </p>
+            </field>
+        </record>
+
+        <!-- Prescriber Action -->
+        <record id="action_pharmacy_prescriber" model="ir.actions.act_window">
+            <field name="name">Prescribers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_prescriber', '=', True)]</field>
+            <field name="context">{'default_is_prescriber': True}</field>
+            <field name="view_id" ref="res_partner_tree_view_prescriber"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new prescriber
+                </p>
+                <p>
+                    Register doctors and prescribers who can issue prescriptions.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_pharmacy_patients"
+                  name="Patients"
+                  parent="menu_pharmacy_root"
+                  action="action_pharmacy_patient"
+                  sequence="20"/>
+
+        <menuitem id="menu_pharmacy_prescribers"
+                  name="Prescribers"
+                  parent="menu_pharmacy_root"
+                  action="action_pharmacy_prescriber"
+                  sequence="30"/>
+
     </data>
 </odoo>

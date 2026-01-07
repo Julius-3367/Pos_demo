@@ -86,7 +86,7 @@
         <record id="action_controlled_drugs_register" model="ir.actions.act_window">
             <field name="name">Controlled Drugs Register</field>
             <field name="res_model">controlled.drugs.register</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="context">{'search_default_group_product': 1}</field>
         </record>
 
