@@ -2,7 +2,8 @@
 <odoo>
     <data>
 
-        <!-- Demo Data Generator Form -->
+        <!-- COMMENTED OUT - Demo Data Generator (Hidden for Production) -->
+        <!--
         <record id="pharmacy_demo_data_form" model="ir.ui.view">
             <field name="name">pharmacy.demo.data.form</field>
             <field name="model">pharmacy.demo.data</field>
@@ -33,7 +34,6 @@
             </field>
         </record>
 
-        <!-- Demo Data Generator Action -->
         <record id="action_pharmacy_demo_data" model="ir.actions.act_window">
             <field name="name">Generate Demo Data</field>
             <field name="res_model">pharmacy.demo.data</field>
@@ -41,13 +41,13 @@
             <field name="target">new</field>
         </record>
 
-        <!-- Menu Item -->
         <menuitem id="menu_pharmacy_demo_data"
                   name="Generate Demo Data"
                   parent="menu_pharmacy_root"
                   action="action_pharmacy_demo_data"
                   sequence="999"
                   groups="pos_demo.group_pharmacy_manager"/>
+        -->
 
     </data>
 </odoo>
