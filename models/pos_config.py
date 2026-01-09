@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from datetime import timezone as dt_timezone
 
 
 class PosConfig(models.Model):
@@ -111,3 +112,31 @@ class PosConfig(models.Model):
         ('sandbox', 'Sandbox/Test'),
         ('production', 'Production'),
     ], string='M-PESA Environment', default='sandbox')
+
+    @api.depends('session_ids', 'session_ids.stop_at')
+    def _compute_last_session(self):
+        """
+        Override to handle cases where stop_at is False (open sessions).
+        This prevents AttributeError when trying to call astimezone() on a boolean.
+        """
+        for pos_config in self:
+            session = self.env['pos.session'].search(
+                [('config_id', '=', pos_config.id)],
+                order='stop_at desc',
+                limit=1
+            )
+            if session and session.stop_at:
+                # Only process if stop_at is actually set (not False)
+                timezone = dt_timezone.utc
+                if self.env.user.tz:
+                    try:
+                        from zoneinfo import ZoneInfo
+                        timezone = ZoneInfo(self.env.user.tz)
+                    except Exception:
+                        pass
+                pos_config.last_session_closing_date = session.stop_at.astimezone(timezone).date()
+                pos_config.last_session_closing_cash = session.cash_register_balance_end_real
+            else:
+                # Session is open or doesn't exist
+                pos_config.last_session_closing_date = False
+                pos_config.last_session_closing_cash = 0

@@ -84,6 +84,16 @@ class ProductTemplate(models.Model):
         help='e.g., Analgesic, Antibiotic, Antihypertensive'
     )
     
+    # Fix for sale_purchase module compatibility
+    # Add this field to prevent errors when sale_purchase module views reference it
+    service_to_purchase = fields.Boolean(
+        string='Subcontract Service',
+        default=False,
+        company_dependent=True,
+        copy=False,
+        help='If ticked, each time you sell this product through a SO, a RfQ is automatically created to buy the product.'
+    )
+    
     @api.depends('drug_schedule')
     def _compute_requires_prescription(self):
         """Compute whether prescription is required based on drug schedule"""
